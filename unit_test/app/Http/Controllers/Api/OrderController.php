@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OrderRequest;
 use App\Services\OrderService;
-use http\Env\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class OrderController extends Controller
 {
@@ -19,5 +18,11 @@ class OrderController extends Controller
     {
         $this->orderService->createOrderBeer($request->only('amount', 'is_voucher', 'time'));
         return \Illuminate\Http\Response::HTTP_OK;
+    }
+
+    public function handledDiscountProduct(Request $request)
+    {
+        $this->orderService->handledDiscountProduct($request->data);
+        return Response::HTTP_OK;
     }
 }

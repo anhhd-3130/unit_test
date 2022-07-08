@@ -14,4 +14,23 @@ class OrderService
         $firstBeerPrice = $attributes['is_voucher'] == BaseEnum::HAVE_VOUCHER ? 100 : $priceBeer;
         return $firstBeerPrice + $priceBeer * ($attributes['amount'] - 1);
     }
+
+    public function handledDiscountProduct($data)
+    {
+        $isShirt = false;
+        $isTie = false;
+        $total = 0;
+        foreach ($data as $datum){
+            if ($datum['product_type'] == BaseEnum::SHIRT){
+                $isShirt = true;
+            }
+            if ($datum['product_type'] == BaseEnum::TIE){
+                $isTie = true;
+            }
+            $total += $datum['amount'];
+        }
+        $isSale5 = $isShirt && $isTie ? 5 : 0;
+        $isSale7 = $total >= 7 ? 7 : 0;
+        return $isSale5 + $isSale7;
+    }
 }
